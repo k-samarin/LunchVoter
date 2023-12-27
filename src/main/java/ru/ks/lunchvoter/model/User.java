@@ -6,24 +6,20 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.lang.NonNull;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import ru.ks.lunchvoter.HasId;
 
 
-import java.util.Date;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
+@Entity
+@Table(name = "users")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Entity
-@Table(name = "users")
 public class User extends NamedEntity implements HasId {
 
     @Column(name = "email", nullable = false, unique = true)
@@ -56,6 +52,10 @@ public class User extends NamedEntity implements HasId {
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles = EnumSet.noneOf(Role.class);
+
+    public boolean hasRole(Role role) {
+        return roles.contains(role);
+    }
 
     @Override
     public String toString() {

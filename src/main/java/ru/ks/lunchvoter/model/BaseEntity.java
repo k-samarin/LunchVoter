@@ -1,13 +1,13 @@
 package ru.ks.lunchvoter.model;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.util.ProxyUtils;
 import ru.ks.lunchvoter.HasId;
 
-import jakarta.persistence.MappedSuperclass;
-
 @MappedSuperclass
+//  https://stackoverflow.com/a/6084701/548473
 @Access(AccessType.FIELD)
 @Getter
 @Setter
@@ -17,6 +17,7 @@ public abstract class BaseEntity implements HasId {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Schema(accessMode = Schema.AccessMode.READ_ONLY) // https://stackoverflow.com/a/28025008/548473
     protected Integer id;
 
     @Override
